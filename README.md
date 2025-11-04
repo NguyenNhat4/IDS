@@ -1,4 +1,4 @@
-# IDS Application - Machine Learning-based Intrusion Detection System
+# IDS Application ( Check file notebook trong folder ml)
 
 ![IDS Application](https://img.shields.io/badge/ML-Random_Forest-blue)
 ![Python](https://img.shields.io/badge/Python-3.8+-green)
@@ -7,7 +7,7 @@
 
 Dự án demo IDS (Intrusion Detection System) sử dụng Machine Learning để phát hiện các cuộc tấn công mạng. Được xây dựng cho môn học Machine Learning với mục đích educational.
 
-## 🎯 Features
+## 🎯 Features 
 
 - **ML Model**: Random Forest Classifier với độ chính xác ~99%
 - **Dataset**: NSL-KDD (125,973 training samples, 22,544 test samples)
@@ -39,7 +39,7 @@ IDS-Application/
 │   ├── index.html                 # Main page
 │   ├── css/style.css              # Styles
 │   └── js/app.js                  # JavaScript logic
-├── ml/                            # Machine Learning
+├── ml/                             # Machine Learning
 │   ├── dataset/                   # NSL-KDD dataset (place here)
 │   ├── trained_models/            # Saved models
 │   └── train.py                   # Training script

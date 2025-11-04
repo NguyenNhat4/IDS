@@ -12,7 +12,6 @@ ENV/
 
 # Jupyter Notebook
 .ipynb_checkpoints
-*.ipynb
 
 # ML Models and Data
 ml/trained_models/*.pkl

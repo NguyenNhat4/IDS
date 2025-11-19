@@ -1,8 +1,9 @@
-# IDS Application ( Check file notebook trong folder ml)
+# IDS Application (Check file notebook trong folder ml)
 
 ![IDS Application](https://img.shields.io/badge/ML-Random_Forest-blue)
 ![Python](https://img.shields.io/badge/Python-3.8+-green)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.104-teal)
+![Streamlit](https://img.shields.io/badge/Streamlit-1.28-red)
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 
 Dự án demo IDS (Intrusion Detection System) sử dụng Machine Learning để phát hiện các cuộc tấn công mạng. Được xây dựng cho môn học Machine Learning với mục đích educational.
@@ -12,7 +13,7 @@ Dự án demo IDS (Intrusion Detection System) sử dụng Machine Learning đ�
 - **ML Model**: Random Forest Classifier với độ chính xác ~99%
 - **Dataset**: NSL-KDD (125,973 training samples, 22,544 test samples)
 - **Attack Types**: DoS, Probe, R2L, U2R
-- **Web Interface**: Real-time attack simulation và detection
+- **Web Interface**: Dashboard tương tác & Simulator tấn công (Streamlit)
 - **Educational**: Chi tiết documentation về từng loại attack
 - **API**: RESTful API với FastAPI
 
@@ -35,10 +36,8 @@ IDS-Application/
 │   └── routes/                    # API routes
 │       ├── detection.py           # Detection endpoint
 │       └── attack_simulator.py    # Attack simulator
-├── frontend/                      # Web interface
-│   ├── index.html                 # Main page
-│   ├── css/style.css              # Styles
-│   └── js/app.js                  # JavaScript logic
+├── frontend/                      # Streamlit Frontend
+│   └── app.py                     # Main Streamlit Application
 ├── ml/                             # Machine Learning
 │   ├── dataset/                   # NSL-KDD dataset (place here)
 │   ├── trained_models/            # Saved models
@@ -67,7 +66,7 @@ venv\Scripts\activate
 # Linux/Mac:
 source venv/bin/activate
 
-# Install packages
+# Install packages (bao gồm cả Backend và Streamlit Frontend)
 pip install -r requirements.txt
 ```
 
@@ -115,42 +114,36 @@ Loading NSL-KDD Dataset...
 
 Training time: ~2-5 minutes (depends on CPU)
 
-### 5. Start Backend
+### 5. Start Application
 
+Bạn cần mở **2 terminal** để chạy song song Backend và Frontend.
+
+**Terminal 1: Start Backend (FastAPI)**
 ```bash
-python backend/main.py
+# Tại thư mục gốc IDS-Application
+cd backend
+uvicorn main:app --reload
 ```
-
-Backend will run at: **http://localhost:8000**
-
+Backend sẽ chạy tại: **http://localhost:8000**
 API Docs: **http://localhost:8000/api/docs**
 
-### 6. Open Frontend
-
-Open browser and navigate to:
-**http://localhost:8000**
-
-Or serve frontend separately:
+**Terminal 2: Start Frontend (Streamlit)**
 ```bash
-cd frontend
-python -m http.server 8080
+# Tại thư mục gốc IDS-Application
+streamlit run frontend/app.py
 ```
-
-Then open: **http://localhost:8080**
+Trình duyệt sẽ tự động mở trang Dashboard tại: **http://localhost:8501**
 
 ## 🎮 Usage
 
-### Web Interface
+### Web Interface (Streamlit)
 
-1. Click attack type buttons to simulate attacks:
-   - **Normal Traffic** - Legitimate web browsing
-   - **DoS Attack** - SYN Flood attack
-   - **Probe Attack** - Port scanning
-   - **R2L Attack** - Brute force login
-   - **U2R Attack** - Buffer overflow / privilege escalation
-
-2. View real-time detection results
-3. Check statistics and activity logs
+1. Truy cập **http://localhost:8501**
+2. Chọn tab **Simulator** từ thanh bên (Sidebar).
+3. Chọn loại tấn công muốn giả lập (ví dụ: DoS, Probe).
+4. Nhấn **Generate Traffic Data** để tạo dữ liệu mạng giả lập.
+5. Nhấn **Analyze Traffic with IDS Model** để gửi dữ liệu tới Backend và nhận kết quả phân tích.
+6. Xem kết quả phân tích và biểu đồ xác suất.
 
 ### API Usage
 
@@ -173,23 +166,6 @@ curl -X POST http://localhost:8000/api/predict \
     "count": 511,
     "serror_rate": 0.99
   }'
-```
-
-Response:
-```json
-{
-  "prediction": "DoS",
-  "confidence": 0.987,
-  "probabilities": {
-    "Normal": 0.002,
-    "DoS": 0.987,
-    "Probe": 0.008,
-    "R2L": 0.002,
-    "U2R": 0.001
-  },
-  "is_attack": true,
-  "prediction_time_ms": 15.3
-}
 ```
 
 ## 📊 Model Performance
@@ -252,21 +228,11 @@ Xem thư mục `docs/` để học về:
 
 ## 🔧 Development
 
-### Run in Development Mode
-
-```bash
-# Backend with auto-reload
-uvicorn backend.main:app --reload --port 8000
-
-# Or
-python backend/main.py
-```
-
 ### Project Dependencies
 
 - **Backend**: FastAPI, Uvicorn
 - **ML**: scikit-learn, pandas, numpy
-- **Frontend**: Vanilla JavaScript (no framework)
+- **Frontend**: Streamlit, Plotly
 
 ## 📈 Future Improvements
 
@@ -276,7 +242,6 @@ python backend/main.py
 - [ ] Docker deployment
 - [ ] Database for logging
 - [ ] User authentication
-- [ ] Dashboard with charts (Chart.js)
 
 ## 🎓 Educational Purpose
 
@@ -298,6 +263,7 @@ MIT License - Free to use for educational purposes
 - scikit-learn documentation
 - FastAPI framework
 - Random Forest algorithm
+- Streamlit community
 
 ## 📞 Support
 
